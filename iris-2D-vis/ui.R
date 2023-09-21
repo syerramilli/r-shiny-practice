@@ -23,7 +23,8 @@ ui <- fluidPage(
       ),
       hr(),
       checkboxInput('by_species', label = 'Show species',value = TRUE),
-      checkboxInput('add_smooth', label = 'Add smoother',value = FALSE)
+      checkboxInput('add_smooth', label = 'Add smoother',value = FALSE),
+      checkboxInput('show_marginals', label = 'Show marginals',value = TRUE)
     ), 
     mainPanel(
       plotOutput('scatter')

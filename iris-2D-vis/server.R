@@ -13,10 +13,12 @@ server <- function(input, output, session){
   
   output$scatter <- renderPlot({
     g <- ggplot(rval_subset(), aes(
-        x=.data[[input$x_var]], y=.data[[input$y_var]], color = Species
+        x=.data[[input$x_var]], y=.data[[input$y_var]]
       ))  + list(
-      theme(legend.position = 'bottom'),
-      geom_point()
+        if(input$by_species) { aes(color=Species) },
+        theme(legend.position = 'bottom'),
+        geom_point(),
+        if(input$add_smooth) { geom_smooth()}
     )
     g
   })

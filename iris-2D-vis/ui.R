@@ -20,7 +20,10 @@ ui <- fluidPage(
         'species', label = 'Filter by Species',
         choices = unique(iris$Species),
         selected = unique(iris$Species)
-      )
+      ),
+      hr(),
+      checkboxInput('by_species', label = 'Show species',value = TRUE),
+      checkboxInput('add_smooth', label = 'Add smoother',value = FALSE)
     ), 
     mainPanel(
       plotOutput('scatter')

@@ -26,25 +26,25 @@ ap_final_dtm <- ap %>%
 
 
 server <- function(input, output, session){
-  r_json <- reactive({
-    ap_lda <- LDA(ap_final_dtm, k = input$n_topics, control = list(seed=124, alpha=0.1) )
-    post <- posterior(ap_lda)
-    mat <- ap_lda@wordassignments
-    
+  lda_model_reactive <- reactive({
+    LDA(ap_final_dtm, k = input$n_topics, control = list(seed=124, alpha=0.1) )
+  })
+  
+  output$lda_vis <- LDAvis::renderVis({
+    lda_model <- lda_model_reactive()
+    post <- posterior(lda_model)
+    mat <- lda_model@wordassignments
     
     lda_json <- LDAvis::createJSON(
       phi = post[["terms"]], 
       theta = post[["topics"]],
       vocab = colnames(post[["terms"]]),
       doc.length = slam::row_sums(mat, na.rm = TRUE),
-      term.frequency = slam::col_sums(mat, na.rm = TRUE)
+      term.frequency = slam::col_sums(mat, na.rm = TRUE),
+      R = input$n_terms_display
     )
     
     lda_json
-  })
-  
-  output$lda_vis <- LDAvis::renderVis({
-    r_json()
   })
 }
   

@@ -60,7 +60,7 @@ server <- function(input, output, session){
   output$cluster_map <- renderLeaflet({
     leaflet() %>%
       #setView(lng = -74.0060, lat= 40.7128, zoom=11) %>%
-      setView(lng = -74 , lat= 40.75, zoom=11) %>%
+      setView(lng = -73.9 , lat= 40.75, zoom=11) %>%
       addTiles()
   })
   
@@ -73,7 +73,7 @@ server <- function(input, output, session){
       addCircleMarkers(
         lng = df_w_labels$pickup_longitude, 
         lat = df_w_labels$pickup_latitude,
-        radius = 1, fillOpacity = 1.0,
+        radius = 3, fillOpacity = 0.75,
         label = df_w_labels$clust_label,
         color = cluster_colors(df_w_labels$clust_label) # Apply color palette
       ) %>%
